@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Webpage Tasks Showcase</title>
+    <style>
+        
+        :target {
+            scroll-margin-top: 60px; 
+        .task-section-content {
+            padding: 20px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+
+    <header id="top" style="background-color: #1a4d96; color: white; padding: 10px 0; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+        <h1 style="margin: 0 0 10px 0; font-size: 28px;">Semantic Webpage Tasks Showcase</h1>
+        <nav>
+            <ul style="list-style-type: none; margin: 0; padding: 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <li><a href="task1.html" style="color: white; text-decoration: none; padding: 5px 10px; border-radius: 3px; background-color: #2a6dbd; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#1f508a'" onmouseout="this.style.backgroundColor='#2a6dbd'">Task 1: Headings & Paragraphs</a></li>
+                <li><a href="task2.html" style="color: white; text-decoration: none; padding: 5px 10px; border-radius: 3px; background-color: #2a6dbd; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#1f508a'" onmouseout="this.style.backgroundColor='#2a6dbd'">Task 2: Images</a></li>
+                <li><a href="task3.html" style="color: white; text-decoration: none; padding: 5px 10px; border-radius: 3px; background-color: #2a6dbd; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#1f508a'" onmouseout="this.style.backgroundColor='#2a6dbd'">Task 3: Media</a></li>
+                <li><a href="task4.html" style="color: white; text-decoration: none; padding: 5px 10px; border-radius: 3px; background-color: #2a6dbd; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#1f508a'" onmouseout="this.style.backgroundColor='#2a6dbd'">Task 4: Links & Anchors</a></li>
+                <li><a href="task5.html" style="color: white; text-decoration: none; padding: 5px 10px; border-radius: 3px; background-color: #2a6dbd; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#1f508a'" onmouseout="this.style.backgroundColor='#2a6dbd'">Task 5: Text Formatting</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="display: flex; max-width: 1200px; margin: 20px auto; padding: 0 20px; gap: 20px; flex-wrap: wrap;">
+
+        <section style="flex: 3; min-width: 60%; background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <h2 style="font-size: 28px; color: #1a4d96; margin-top: 0; border-bottom: 2px solid #ccc; padding-bottom: 10px;">
+                Project Overview
+            </h2>
+            <article>
+                <p style="line-height: 1.6; font-size: 16px;">
+                    This project demonstrates the effective use of semantic HTML elements (`&lt;header&gt;`, `&lt;nav&gt;`, `&lt;main&gt;`, `&lt;section&gt;`, `&lt;aside&gt;`, `&lt;footer&gt;`, etc.) along with inline CSS for responsive styling.
+                </p>
+                <p style="line-height: 1.6; font-size: 16px;">
+                    Please use the navigation links above to explore the five dedicated task pages, each focusing on a core HTML concept.
+                </p>
+                <h3 style="font-size: 20px; margin-top: 20px; color: #2a6dbd;">About the Sidebar Layout</h3>
+                <p style="line-height: 1.6; font-size: 16px;">
+                    The layout on this page uses a **flexbox** container for the `<main>` element, splitting the screen into a main content area (`<section style="flex: 3">`) and an auxiliary sidebar (`<aside style="flex: 1">`). The sidebar itself is a flex container to arrange its two content boxes vertically.
+                </p>
+            </article>
+        </section>
+        
+        <aside style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px;">
+            <div style="background-color: #e6e9f0; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 3px solid #1a4d96;">
+                <h3 style="font-size: 18px; color: #1a4d96; margin-top: 0;">Auxiliary Information Box 1</h3>
+                <p style="font-size: 14px; line-height: 1.5;">
+                    The <code>&lt;aside&gt;</code> element is for content that is secondary to the main content but still related. This layout is fully responsive, stacking the sidebar below the main section on small screens.
+                </p>
+            </div>
+
+            <div style="background-color: #e6e9f0; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 3px solid #4CAF50;">
+                <h3 style="font-size: 18px; color: #1a4d96; margin-top: 0;">Quick Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0; margin-top: 10px; font-size: 14px;">
+                    <li style="margin-bottom: 5px;"><a href="task1.html" style="color: #2a6dbd; text-decoration: none;">&rarr; View Task 1</a></li>
+                    <li style="margin-bottom: 5px;"><a href="task3.html" style="color: #2a6dbd; text-decoration: none;">&rarr; View Task 3 (Media)</a></li>
+                    <li style="margin-bottom: 5px;"><a href="task5.html" style="color: #2a6dbd; text-decoration: none;">&rarr; View Task 5 (Formatting)</a></li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+    
+    <footer style="background-color: #1a4d96; color: white; text-align: center; padding: 20px; margin-top: 30px;">
+        <p style="margin: 0;">&copy; 2025 Semantic Webpage Project. All rights reserved.</p>
+        <address style="font-style: normal; font-size: 14px;">
+            Demonstrating semantic HTML elements and inline CSS.
+        </address>
+    </footer>
+
+</body>
+</html>

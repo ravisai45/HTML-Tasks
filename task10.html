@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+    *{
+    margin: 0;
+    padding: 10px 00px;
+    box-sizing: border-box;
+    background-color: turquoise;
+}
+|h1{
+    color: blue;
+    font-family: Arial, sans-serif;
+}
+h2{
+    font-style: italic;
+}
+
+#para1{
+    font-weight: bold;
+    color: black;
+}
+p{
+    font-size: 16px;
+    line-height: 1.5;
+    color: brown;
+}
+.highlightWord{
+    background-color: lightgreen;
+    font-weight: bold;
+}
+.highlight{
+    background-color: yellow;
+}
+h3, h4 , h5{
+    font-family: 'Times New Roman', serif;
+    color: green;
+}
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button{
+    width: 100px;
+    height: 30px;
+    background-color: orange;
+   
+}
+.boxes{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 50px;
+    border-bottom: 3px solid black;
+    border-top: 3px dotted green;
+    border-left: 3px dashed blue;
+    border-right: 3px double red;
+}
+
+button:hover{
+    background-color: red;
+    color: white;
+}
+.box{
+    width: 100px;
+    height: 100px;
+   background-color:rgb(44, 44, 148);
+    margin: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.href{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+a{
+   text-decoration: none;
+    font-size: 30px;
+
+   
+}
+a:hover{
+    cursor: pointer;
+}
+.box2{
+    background-color: pink;
+    border: 4px solid black;
+}
+
+.box3{
+    background-color: lightgreen;
+   border: 4px dashed blue;
+   
+}
+.box4{
+    background-color: lightgray;
+    border: 4px dotted red;
+}
+.box5{
+    background-color: lightyellow;
+  border-radius: 50%
+  ;}
+
+/* RGBA */
+  .box6{
+    background-color: rgba(30, 47, 22, 0.2);
+  }
+  .box7{
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    border: rgba(30, 47, 22, 0.2) ;
+  }
+ 
+
+
+  input[type="text"]{
+    width: 200px;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+input[type="submit"]{
+    width: 100px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+   </style>
+</head>
+<body>
+   
+   <h1>Hi my name is Ravi</h1>
+    <h2>Hi my name is Ravi</h2>
+     <h3>Hi my name is Ravi</h3>
+      <h4>Hi my name is Ravi</h4>
+       <h5>Hi my name is Ravi</h5>
+        <h6>Hi my name is Ravi</h6>
+
+
+        <p>This is a Paragraph</p>
+
+        <p id="para1" >This is an ID Paragraph</p>
+
+        <p class="highlight ">This is an highlighted Paragraph</p>
+        <p class="para2"> this is a paragraph with just a <span class="highlightWord"> highlighted word </span></p>
+
+        <div class="buttons">
+
+        <button id="IdButton">Click Me</button>
+       
+        </div>
+        <div class="boxes">
+         <div class=" box1 box" > Normal Box</div>
+           <div class="box2 box">Big Border</div>
+         <div class="box3 box">Dashed,Border</div>
+         <div class="box4 box">Dotted Border</div>
+         <div class="box5 box"> Circle</div>
+           <div class="box box6">RGBA </div>
+            <div class="box box7">Gradient Border</div>
+         </div>
+       
+        
+         <div class="href">
+
+         <a href="https://www.google.comn" target="_blank">Google</a>
+
+         </div>
+        <form action="">
+            <label for="Name">Name :</label>
+            <input type="text" id="name" placeholder="Enter Your name">
+            <input type="submit">
+
+        </form>
+
+       
+
+    
+</body>
+</html>

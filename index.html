@@ -1,110 +1,108 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>BrightFuture University</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+<head>
+    <title>Marks Calculator</title>
 
-  <body>
-    <!-- HEADER -->
-    <header class="header">
-      <h2>BrightFuture University</h2>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            background-color: rgb(113, 108, 108);
+            }
 
-      <nav class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Programs</a>
-        <a href="#">Admissions</a>
-        <a href="#">Contact</a>
-      </nav>
-      
-    </header>
+        .box {
+            
+            width: 300px;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 8px;
+        }
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-      <div class="hero-text">
-        <h1>Your Journey Begins at BrightFuture University</h1>
-        <p>
-          Discover exceptional academic programs and a supportive environment
-          designed to help you succeed both personally and professionally.
-        </p>
+        input { 
+            width: 85%;
+            padding: 7px;
+            margin: 6px 0;
+        }
 
-        <a href="#" class="btn-primary">Apply Now</a>
-      </div>
+        button {
+            width: 100px;
+            padding: 7px 12px;
+            margin-top: 8px;
+        }
 
-      <img
-        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b"
-        class="hero-img"
-      />
-    </section>
+        #output {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
 
-    <!-- EXPLORE PROGRAMS SECTION -->
-    <section class="programs">
-      <h2>Explore Our Programs</h2>
+<body>
 
-      <div class="program-cards">
-        <div class="card">
-          <div class="card-header engineering">
-            <h3>Engineering</h3>
-          </div>
-          <div class="card-body">
-            <p>
-              Build your future with top-ranked programs in technology,
-              innovation, and design.
-            </p>
-            <a href="#" class="learn-more engineering-text">Learn More</a>
-          </div>
-        </div>
+    <div class="box">
+        <h3>Marks Calculator</h3>
 
-        <div class="card">
-          <div class="card-header management">
-            <h3>Management</h3>
-          </div>
-          <div class="card-body">
-            <p>
-              Become a future leader with programs in business, strategy, and
-              entrepreneurship.
-            </p>
-            <a href="#" class="learn-more management-text">Learn More</a>
-          </div>
-        </div>
+        <input type="text" id="name" placeholder="Enter the Name">
 
-        <div class="card">
-          <div class="card-header arts">
-            <h3>Arts & Sciences</h3>
-          </div>
-          <div class="card-body">
-            <p>
-              Explore creativity and curiosity through arts, literature, and
-              natural sciences.
-            </p>
-            <a href="#" class="learn-more arts-text">Learn More</a>
-          </div>
-        </div>
-      </div>
-    </section>
+        <input type="number" id="m1" placeholder="Subject 1 Marks">
 
-    <!-- BOTTOM SECTION -->
-    <section class="bottom-section">
-      <img
-        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b"
-        class="bottom-img"
-      />
+        <input type="number" id="m2" placeholder="Subject 2 Marks">
 
-      <div class="bottom-text">
-        <h2>A Campus Designed for Your Growth</h2>
-        <p>
-          Our state-of-the-art facilities, welcoming community, and dedicated
-          faculty ensure that every student gets the support and resources
-          needed to succeed.
-        </p>
+        <input type="number" id="m3" placeholder="Subject 3 Marks">
 
-        <a href="#" class="btn-primary">Discover More</a>
-      </div>
-    </section>
+        <button onclick="calculate()">Calculate</button>
+        <button onclick="resetForm()">Reset</button>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-      © 2025 BrightFuture University. All Rights Reserved.
-    </footer>
-  </body>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            
+            let name = document.getElementById("name").value;
+            let s1 = Number(document.getElementById("m1").value);
+            let s2 = Number(document.getElementById("m2").value);
+            let s3 = Number(document.getElementById("m3").value);
+
+          
+            let total = s1 + s2 + s3;
+            let average = total / 3;
+
+            
+            let grade;
+            if (average >= 70) grade = "A";
+            else if (average >= 50) grade = "B";
+            else if (average >= 35) grade = "C";
+            else grade = "Fail";
+
+          
+            let student = {
+                name: name,
+                marks: [s1, s2, s3],
+                total: total,
+                average: average,
+                grade: grade
+            };
+
+           
+            document.getElementById("output").innerHTML =
+                "Name: " + student.name + "<br>" +
+                "Total: " + student.total + "<br>" +
+                "Average: " + student.average.toFixed(2) + "<br>" +
+                "Grade: " + student.grade;
+        }
+
+        
+        function resetForm() {
+            document.getElementById("name").value = "";
+            document.getElementById("m1").value = "";
+            document.getElementById("m2").value = "";
+            document.getElementById("m3").value = "";
+            document.getElementById("output").innerHTML = "";
+        }
+    </script>
+
+</body>
 </html>

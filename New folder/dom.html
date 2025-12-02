@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+
+        #demo {
+            color: blue;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        input, button {
+            padding: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>My First Page</h2>
+
+
+<p id="demo"></p>
+
+
+<form id="myForm">
+    <label>Enter Your Name:</label><br>
+    <input type="text" id="nameInput" placeholder="Type here..." />
+    <button type="button" onclick="showName()">Submit</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+  
+    document.getElementById("demo").innerHTML = "Hello World!";
+
+   
+    function showName() {
+        
+        let nameValue = document.getElementById("nameInput").value;
+
+    
+        document.getElementById("result").innerHTML =
+            "You entered: " + nameValue;
+    }
+</script>
+
+</body>
+</html>

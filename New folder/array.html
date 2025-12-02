@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>JavaScript Arrays – Examples</h1>
+
+<p id="at"></p>
+<p id="search"></p>
+<p id="sort"></p>
+<p id="iteration"></p>
+<p id="reference"></p>
+<p id="constArray"></p>
+
+<script>
+
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+let atValue = fruits.at(2);
+document.getElementById("at").innerHTML = "at(): " + atValue;
+
+
+
+let index = fruits.indexOf("Apple");  
+let present = fruits.includes("Mango");  
+
+document.getElementById("search").innerHTML = 
+"Search: Apple found at index " + index + 
+" | Mango found: " + present;
+
+
+//
+let sorted = [...fruits].sort();  
+
+
+document.getElementById("sort").innerHTML = 
+"Sorted: " + sorted.join(", ");
+
+
+
+let text = "";
+fruits.forEach(function(item, i){
+    text += i + ": " + item + "<br>";
+});
+
+document.getElementById("iteration").innerHTML = 
+"Iteration:<br>" + text;
+
+
+
+let refArray = fruits;   
+
+refArray.push("Kiwi");   
+
+document.getElementById("reference").innerHTML =
+"Reference Example (fruits and refArray same): " + fruits;
+
+
+
+fruits.push("Guava");  
+
+
+document.getElementById("constArray").innerHTML =
+"Const Array (new fruit added): " + fruits;
+
+</script>
+
+</body>
+</html>

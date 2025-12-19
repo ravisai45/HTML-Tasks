@@ -1,108 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Marks Calculator</title>
-
-    <style>
-        body {
-            font-family: Arial;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            background-color: rgb(113, 108, 108);
-            }
-
-        .box {
-            
-            width: 300px;
-            padding: 10px;
-            border: 1px solid black;
-            border-radius: 8px;
-        }
-
-        input { 
-            width: 85%;
-            padding: 7px;
-            margin: 6px 0;
-        }
-
-        button {
-            width: 100px;
-            padding: 7px 12px;
-            margin-top: 8px;
-        }
-
-        #output {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>Typing Test Challenge</title>
+    <link rel="stylesheet" href="style.css">
+    
 </head>
-
 <body>
 
-    <div class="box">
-        <h3>Marks Calculator</h3>
+<div class="container">
+    <h1>Typing Test Challenge</h1>
 
-        <input type="text" id="name" placeholder="Enter the Name">
-
-        <input type="number" id="m1" placeholder="Subject 1 Marks">
-
-        <input type="number" id="m2" placeholder="Subject 2 Marks">
-
-        <input type="number" id="m3" placeholder="Subject 3 Marks">
-
-        <button onclick="calculate()">Calculate</button>
-        <button onclick="resetForm()">Reset</button>
-
-        <div id="output"></div>
+    <div class="settings">
+        <label>Select Time:</label>
+        <select id="timeSelect">
+            <option value="120">2 Minutes</option>
+            <option value="180">3 Minutes</option>
+        </select>
+        <button onclick="startTest()">Start Test</button>
     </div>
 
-    <script>
-        function calculate() {
-            
-            let name = document.getElementById("name").value;
-            let s1 = Number(document.getElementById("m1").value);
-            let s2 = Number(document.getElementById("m2").value);
-            let s3 = Number(document.getElementById("m3").value);
+    <p id="paragraph"></p>
 
-          
-            let total = s1 + s2 + s3;
-            let average = total / 3;
+    <textarea id="input" placeholder="Start typing here..." disabled></textarea>
 
-            
-            let grade;
-            if (average >= 70) grade = "A";
-            else if (average >= 50) grade = "B";
-            else if (average >= 35) grade = "C";
-            else grade = "Fail";
+    <div class="info">
+        <span>Time Left: <b id="time">0</b>s</span>
+    </div>
 
-          
-            let student = {
-                name: name,
-                marks: [s1, s2, s3],
-                total: total,
-                average: average,
-                grade: grade
-            };
+    <div class="result" id="result"></div>
+</div>
 
-           
-            document.getElementById("output").innerHTML =
-                "Name: " + student.name + "<br>" +
-                "Total: " + student.total + "<br>" +
-                "Average: " + student.average.toFixed(2) + "<br>" +
-                "Grade: " + student.grade;
-        }
-
-        
-        function resetForm() {
-            document.getElementById("name").value = "";
-            document.getElementById("m1").value = "";
-            document.getElementById("m2").value = "";
-            document.getElementById("m3").value = "";
-            document.getElementById("output").innerHTML = "";
-        }
-    </script>
-
+<script src="script.js"></script>
 </body>
 </html>

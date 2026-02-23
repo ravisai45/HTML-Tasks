@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task-Todo</title>
+
+<style>
+/* ===== GOOGLE FONT ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#141E30,#243B55);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+color:#fff;
+}
+
+.container{
+width:100%;
+max-width:900px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+border-radius:20px;
+padding:30px;
+box-shadow:0 10px 40px rgba(0,0,0,0.5);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+font-weight:600;
+}
+
+.input-section{
+display:grid;
+grid-template-columns:2fr 1fr 1fr 1fr auto;
+gap:10px;
+margin-bottom:20px;
+}
+
+input,select{
+padding:10px;
+border:none;
+border-radius:8px;
+outline:none;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+}
+
+.add-btn{
+background:#00c6ff;
+color:#000;
+}
+
+.add-btn:hover{
+background:#00f2fe;
+}
+
+.search-filter{
+display:flex;
+justify-content:space-between;
+margin-bottom:15px;
+gap:10px;
+}
+
+.task-list{
+list-style:none;
+max-height:400px;
+overflow-y:auto;
+}
+
+.task{
+background:rgba(255,255,255,0.1);
+padding:15px;
+margin-bottom:10px;
+border-radius:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+transition:0.3s;
+}
+
+.task.completed{
+text-decoration:line-through;
+opacity:0.6;
+}
+
+.task-info{
+flex:1;
+}
+
+.priority-high{color:#ff4d4d;}
+.priority-medium{color:#ffc107;}
+.priority-low{color:#4caf50;}
+
+.actions button{
+margin-left:5px;
+}
+
+.stats{
+margin-top:20px;
+display:flex;
+justify-content:space-between;
+}
+
+.progress-bar{
+height:10px;
+background:#333;
+border-radius:10px;
+margin-top:10px;
+overflow:hidden;
+}
+
+.progress{
+height:100%;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+width:0%;
+}
+
+@media(max-width:768px){
+.input-section{
+grid-template-columns:1fr;
+}
+.search-filter{
+flex-direction:column;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1> Task To-Do</h1>
+
+<div class="input-section">
+<input type="text" id="taskInput" placeholder="Enter Task">
+<input type="datetime-local" id="dueDate">
+<select id="priority">
+<option value="Low">Low</option>
+<option value="Medium">Medium</option>
+<option value="High">High</option>
+</select>
+<select id="category">
+<option value="Work">Work</option>
+<option value="Personal">Personal</option>
+<option value="Study">Study</option>
+</select>
+<button class="add-btn" onclick="addTask()">Add</button>
+</div>
+
+<div class="search-filter">
+<input type="text" id="search" placeholder="Search Task..." onkeyup="renderTasks()">
+<select id="filter" onchange="renderTasks()">
+<option value="All">All</option>
+<option value="Completed">Completed</option>
+<option value="Pending">Pending</option>
+</select>
+</div>
+
+<ul class="task-list" id="taskList"></ul>
+
+<div class="stats">
+<div>
+Total: <span id="total">0</span> |
+Completed: <span id="completed">0</span> |
+Pending: <span id="pending">0</span>
+</div>
+</div>
+
+<div class="progress-bar">
+<div class="progress" id="progress"></div>
+</div>
+
+</div>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks(){
+localStorage.setItem("tasks",JSON.stringify(tasks));
+}
+
+function addTask(){
+let text = document.getElementById("taskInput").value;
+let due = document.getElementById("dueDate").value;
+let priority = document.getElementById("priority").value;
+let category = document.getElementById("category").value;
+
+if(text==="") return alert("Enter Task!");
+
+tasks.push({
+id:Date.now(),
+text,
+due,
+priority,
+category,
+completed:false
+});
+
+document.getElementById("taskInput").value="";
+saveTasks();
+renderTasks();
+}
+
+function deleteTask(id){
+tasks = tasks.filter(task=>task.id!==id);
+saveTasks();
+renderTasks();
+}
+
+function toggleComplete(id){
+tasks = tasks.map(task=>{
+if(task.id===id) task.completed=!task.completed;
+return task;
+});
+saveTasks();
+renderTasks();
+}
+
+function editTask(id){
+let newText = prompt("Edit Task:");
+if(newText){
+tasks = tasks.map(task=>{
+if(task.id===id) task.text=newText;
+return task;
+});
+saveTasks();
+renderTasks();
+}
+}
+
+function renderTasks(){
+let list = document.getElementById("taskList");
+list.innerHTML="";
+
+let search = document.getElementById("search").value.toLowerCase();
+let filter = document.getElementById("filter").value;
+
+let filtered = tasks.filter(task=>{
+let matchSearch = task.text.toLowerCase().includes(search);
+let matchFilter =
+filter==="All" ||
+(filter==="Completed" && task.completed) ||
+(filter==="Pending" && !task.completed);
+return matchSearch && matchFilter;
+});
+
+filtered.forEach(task=>{
+let li=document.createElement("li");
+li.className="task"+(task.completed?" completed":"");
+
+li.innerHTML=`
+<div class="task-info">
+<strong>${task.text}</strong><br>
+<small>📅 ${task.due || "No date"} | 📂 ${task.category}</small><br>
+<small class="priority-${task.priority.toLowerCase()}">Priority: ${task.priority}</small>
+</div>
+<div class="actions">
+<button onclick="toggleComplete(${task.id})">✔</button>
+<button onclick="editTask(${task.id})">✏</button>
+<button onclick="deleteTask(${task.id})">🗑</button>
+</div>
+`;
+
+list.appendChild(li);
+});
+
+updateStats();
+}
+
+function updateStats(){
+let total = tasks.length;
+let completed = tasks.filter(t=>t.completed).length;
+let pending = total - completed;
+
+document.getElementById("total").innerText=total;
+document.getElementById("completed").innerText=completed;
+document.getElementById("pending").innerText=pending;
+
+let percent = total===0?0:(completed/total)*100;
+document.getElementById("progress").style.width=percent+"%";
+}
+
+renderTasks();
+</script>
+
+</body>
+</html>

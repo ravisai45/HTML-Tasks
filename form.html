@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Management System</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#1e3c72,#2a5298);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+
+.login-box{
+width:380px;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.login-box h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.login-box input{
+width:100%;
+padding:10px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+.login-box button{
+width:100%;
+padding:10px;
+background:#1e3c72;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+
+.container{
+display:none;
+width:100%;
+max-width:850px;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 20px 40px rgba(0,0,0,0.3);
+max-height:90vh;
+overflow-y:auto;
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+.section-title{
+margin:20px 0 10px;
+font-weight:600;
+color:#1e3c72;
+border-bottom:2px solid #eee;
+padding-bottom:5px;
+}
+
+.form-group{
+margin-bottom:12px;
+}
+
+label{
+font-size:13px;
+font-weight:600;
+}
+
+input,select,textarea{
+width:100%;
+padding:8px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+textarea{resize:none;}
+
+button{
+padding:8px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-top:8px;
+}
+
+.submit-btn{
+background:#1e3c72;
+color:white;
+width:100%;
+}
+
+.reset-btn{
+background:#e74c3c;
+color:white;
+width:100%;
+}
+
+.student-card{
+background:#f4f6f9;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.student-card img{
+width:50px;
+height:50px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.action-btn{
+padding:5px 8px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:12px;
+}
+
+.edit-btn{background:#2980b9;color:white;}
+.delete-btn{background:#c0392b;color:white;}
+
+.popup{
+position:fixed;
+top:20px;
+right:20px;
+background:#27ae60;
+color:white;
+padding:10px 20px;
+border-radius:6px;
+display:none;
+}
+
+.success-modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  visibility:hidden;
+  opacity:0;
+  transition:0.3s ease;
+}
+
+.success-modal.active{
+  visibility:visible;
+  opacity:1;
+}
+
+.modal-content{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+  width:320px;
+  animation:pop 0.3s ease;
+}
+
+.modal-content h3{
+  color:#27ae60;
+  margin-bottom:10px;
+}
+
+.modal-content button{
+  margin-top:15px;
+  padding:8px 20px;
+  background:#1e3c72;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+@keyframes pop{
+  from{transform:scale(0.8);}
+  to{transform:scale(1);}
+}
+
+</style>
+</head>
+
+<body>
+
+
+<div class="login-box" id="loginBox">
+<h2>Student Login</h2>
+<input type="text" id="loginName" placeholder="Enter Student Name" required>
+<input type="text" id="loginRoll" placeholder="Enter Roll Number" required>
+<button onclick="login()">Login</button>
+</div>
+
+
+<div class="container" id="mainContainer">
+
+<h2>Student Registration Form</h2>
+
+<form id="studentForm">
+
+<div class="section-title">Basic Details</div>
+
+<div class="form-group"><label>Student ID</label><input type="text" id="studentId" required></div>
+<div class="form-group"><label>Full Name</label><input type="text" id="name" required></div>
+
+<div class="section-title">Contact Details</div>
+
+<div class="form-group"><label>Mobile (10 digits)</label><input type="text" id="mobile" required></div>
+<div class="form-group"><label>Nationality</label><input type="text" id="nationality"></div>
+
+<div class="section-title">Personal Details</div>
+
+<div class="form-group"><label>Date of Birth</label><input type="date" id="dob"></div>
+<div class="form-group"><label>Age</label><input type="number" id="age" readonly></div>
+<div class="form-group"><label>Aadhar (12 digits)</label><input type="text" id="aadhar" required></div>
+
+<div class="section-title">Address</div>
+
+<div class="form-group"><label>Address</label><textarea id="address"></textarea></div>
+<div class="form-group"><label>City</label><input type="text" id="city"></div>
+<div class="form-group"><label>State</label><input type="text" id="state"></div>
+<div class="form-group"><label>Country</label><input type="text" id="country"></div>
+<div class="form-group"><label>Pin Code</label><input type="text" id="pincode"></div>
+
+<div class="section-title">Parent Details</div>
+
+<div class="form-group"><label>Father/Mother Name</label><input type="text" id="parentName"></div>
+<div class="form-group"><label>Parent Contact (10 digits)</label><input type="text" id="parentContact"></div>
+
+<div class="section-title">Academic Details</div>
+
+<div class="form-group"><label>Department</label>
+<select id="department">
+<option>CSE</option>
+<option>ECE</option>
+<option>EEE</option>
+<option>Mechanical</option>
+</select></div>
+
+<div class="form-group"><label>Year</label>
+<select id="year">
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+</select></div>
+
+<div class="form-group"><label>Blood Group</label>
+<select id="bloodGroup">
+<option>A+</option>
+<option>B+</option>
+<option>O+</option>
+<option>AB+</option>
+<option>A-</option>
+<option>B-</option>
+<option>O-</option>
+<option>AB-</option>
+</select></div>
+
+<div class="form-group"><label>Upload Image</label><input type="file" id="image"></div>
+
+<button class="submit-btn">Submit</button>
+<button type="button" class="reset-btn" onclick="resetForm()">Reset</button>
+
+</form>
+
+<div id="studentList"></div>
+
+</div>
+
+<div class="popup" id="popup">Submitted Successfully!</div>
+
+<div class="success-modal" id="successModal">
+  <div class="modal-content">
+    <h3>✅ Submitted Successfully!</h3>
+    <p>Student details have been saved successfully.</p>
+    <button onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+
+<script>
+let students = JSON.parse(localStorage.getItem("students")) || [];
+let editIndex = null;
+
+
+function login(){
+if(loginName.value.trim()==="" || loginRoll.value.trim()===""){
+alert("Enter Name and Roll Number");
+return;
+}
+loginBox.style.display="none";
+mainContainer.style.display="block";
+displayStudents();
+}
+
+
+dob.addEventListener("change",()=>{
+let birth=new Date(dob.value);
+let diff=Date.now()-birth.getTime();
+let ageDate=new Date(diff);
+age.value=Math.abs(ageDate.getUTCFullYear()-1970);
+});
+
+
+studentForm.addEventListener("submit",(e)=>{
+e.preventDefault();
+
+if(!/^\d{10}$/.test(mobile.value)) return alert("Invalid Mobile");
+if(!/^\d{12}$/.test(aadhar.value)) return alert("Invalid Aadhar");
+if(parentContact.value && !/^\d{10}$/.test(parentContact.value)) return alert("Invalid Parent Contact");
+
+let reader=new FileReader();
+let file=image.files[0];
+
+reader.onload=()=>{
+let student={
+studentId:studentId.value,
+name:name.value,
+title:title.value,
+mobile:mobile.value,
+nationality:nationality.value,
+dob:dob.value,
+age:age.value,
+aadhar:aadhar.value,
+address:address.value,
+city:city.value,
+state:state.value,
+country:country.value,
+pincode:pincode.value,
+parentName:parentName.value,
+parentContact:parentContact.value,
+department:department.value,
+year:year.value,
+bloodGroup:bloodGroup.value,
+image:reader.result
+};
+
+if(editIndex!==null){
+students[editIndex]=student;
+editIndex=null;
+}else{
+students.push(student);
+}
+
+localStorage.setItem("students",JSON.stringify(students));
+displayStudents();
+showPopup();
+studentForm.reset();
+};
+
+if(file) reader.readAsDataURL(file);
+else reader.onload();
+});
+
+function displayStudents(){
+studentList.innerHTML="";
+students.forEach((s,i)=>{
+let card=document.createElement("div");
+card.className="student-card";
+card.innerHTML=`
+<div>
+<img src="${s.image||''}">
+<strong>${s.name}</strong><br>
+${s.department} - Year ${s.year}
+</div>
+<div>
+<button class="action-btn edit-btn">Edit</button>
+<button class="action-btn delete-btn">Delete</button>
+</div>
+`;
+
+
+
+card.querySelector(".edit-btn").addEventListener("click",()=>{
+editIndex=i;
+Object.keys(s).forEach(key=>{
+if(document.getElementById(key)){
+document.getElementById(key).value=s[key];
+}
+});
+});
+
+card.querySelector(".delete-btn").addEventListener("click",()=>{
+students.splice(i,1);
+localStorage.setItem("students",JSON.stringify(students));
+displayStudents();
+});
+
+studentList.appendChild(card);
+});
+}
+
+
+function resetForm(){
+studentForm.reset();
+editIndex=null;
+}
+
+function showPopup(){
+  document.getElementById("successModal").classList.add("active");
+}
+
+
+function closeModal(){
+  document.getElementById("successModal").classList.remove("active");
+}
+
+</script>
+
+</body>
+</html>

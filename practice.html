@@ -1,71 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-   
-    <title>Odd Even Checker</title>  
-
+    <title>Smart Web Dev Quiz</title>
     <style>
-        body {
+        body{
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 50px;
-            background-color: rgb(56, 52, 52);
+            background: linear-gradient(135deg,#1e3c72,#2a5298);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            color:white;
         }
 
-        .box {
-            padding: 20px;
+        .quiz-box{
+            background: rgba(0,0,0,0.6);
+            padding:30px;
+            width:400px;
+            border-radius:10px;
+            text-align:center;
         }
 
-        input {
-            padding: 10px;
-            width: 180px;
-            font-size: 16px;
+        h2{
+            margin-bottom:15px;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+        .option{
+            display:block;
+            background:#ffffff;
+            color:black;
+            padding:10px;
+            margin:8px 0;
+            border-radius:5px;
+            cursor:pointer;
         }
 
+        .option:hover{
+            background:#ddd;
+        }
 
-        #result {
-            margin-top: 20px;
-            font-size: 22px;
-            font-weight: bold;
+        #timer{
+            font-weight:bold;
+            margin-bottom:10px;
+            color:yellow;
+        }
+
+        button{
+            padding:10px 15px;
+            border:none;
+            background:orange;
+            color:white;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        #result{
+            font-size:20px;
+            margin-top:15px;
         }
     </style>
 </head>
-
 <body>
 
-    <div class="box">
-        <input type="number" id="num" placeholder="Enter the number">
-        <button onclick="checkNumber()">Check Number</button>
+<div class="quiz-box">
+    <h2>Web Development Quiz</h2>
+    <div id="timer">Time Left: 15s</div>
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="result"></div>
+</div>
 
-        <p id="result"></p>
-    </div>
+<script>
+const quizData = [
+    {
+        question: "Which HTML tag is used to include JavaScript?",
+        options: ["<js>", "<script>", "<javascript>", "<code>"],
+        correct: 1
+    },
+    {
+        question: "Which CSS property is used to change text color?",
+        options: ["font-style", "text-color", "color", "background-color"],
+        correct: 2
+    },
+    {
+        question: "Which method converts JSON string to object?",
+        options: ["JSON.parse()", "JSON.stringify()", "JSON.convert()", "JSON.toObject()"],
+        correct: 0
+    },
+    {
+        question: "Which is not a JavaScript data type?",
+        options: ["Number", "Boolean", "Float", "String"],
+        correct: 2
+    },
+    {
+        question: "Which HTML attribute is used for unique identification?",
+        options: ["class", "name", "id", "key"],
+        correct: 2
+    }
+];
 
-    <script>
-        function checkNumber() {
-            let n = document.getElementById("num").value;
-            let result = document.getElementById("result");
+let currentQuestion = 0;
+let score = 0;
+let timeLeft = 15;
+let timer;
 
-            if (n === "") {
-                result.innerHTML = "Please enter a number!";
-                return;
-            }
+function loadQuestion(){
+    clearInterval(timer);
+    timeLeft = 15;
+    document.getElementById("timer").innerText = "Time Left: " + timeLeft + "s";
 
-           
-            if (n % 2 === 0) {
-                document.body.style.background = "#b3e5fc"; 
-                result.innerHTML = n + " is EVEN";
-            } else {
-                document.body.style.background = "#f8bbd0";
-                result.innerHTML = n + " is ODD";
-            }
+    const q = quizData[currentQuestion];
+    document.getElementById("question").innerText = q.question;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach((option,index)=>{
+        const btn = document.createElement("div");
+        btn.classList.add("option");
+        btn.innerText = option;
+        btn.onclick = ()=>checkAnswer(index);
+        optionsDiv.appendChild(btn);
+    });
+
+    timer = setInterval(()=>{
+        timeLeft--;
+        document.getElementById("timer").innerText = "Time Left: " + timeLeft + "s";
+
+        if(timeLeft === 0){
+            nextQuestion();
         }
-    </script>
+    },1000);
+}
+
+function checkAnswer(selected){
+    if(selected === quizData[currentQuestion].correct){
+        score++;
+    }
+    nextQuestion();
+}
+
+function nextQuestion(){
+    clearInterval(timer);
+    currentQuestion++;
+
+    if(currentQuestion < quizData.length){
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult(){
+    document.getElementById("question").innerText = "Quiz Completed!";
+    document.getElementById("options").innerHTML = "";
+    document.getElementById("timer").innerText = "";
+    document.getElementById("result").innerText = 
+        "Your Score: " + score + " / " + quizData.length;
+}
+
+loadQuestion();
+</script>
 
 </body>
 </html>

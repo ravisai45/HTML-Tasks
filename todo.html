@@ -1,113 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  
-  <title>To Do List</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta charset="UTF-8">
+<title>Advanced To-Do List</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #7a7777;
-    }
+<style>
 
-    .container {
-      width: 320px;
-      margin: 100px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-     
-    }
+/* INTERNAL CSS */
 
-    input {
-      width: 70%;
-      padding: 8px;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
 
-    button {
-      padding: 8px 10px;
-      background: #28a745;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
+body{
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
 
-    li {
-      margin: 10px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #eee;
-      padding: 8px;
-      border-radius: 6px;
-    }
+.container{
+background:white;
+width:500px;
+padding:25px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
 
-    .actions i {
-      margin-left: 10px;
-      cursor: pointer;
-    }
+h1{
+text-align:center;
+margin-bottom:20px;
+color:#333;
+}
 
-    .actions i:hover {
-      color: red;
-    }
-  </style>
+.input-section{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-bottom:20px;
+}
+
+input,select,button{
+padding:10px;
+font-size:16px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+background:#4facfe;
+color:white;
+cursor:pointer;
+border:none;
+transition:0.3s;
+}
+
+button:hover{
+background:#2b7be4;
+}
+
+.task-list{
+list-style:none;
+max-height:300px;
+overflow-y:auto;
+}
+
+.task{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#f5f5f5;
+padding:10px;
+margin-bottom:10px;
+border-radius:5px;
+}
+
+.task.completed span{
+text-decoration:line-through;
+color:gray;
+}
+
+.actions button{
+margin-left:5px;
+background:#ff4d4d;
+}
+
+.complete-btn{
+background:#28a745 !important;
+}
+
+.date-time{
+font-size:12px;
+color:#666;
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h2> To Do List</h2>
+<div class="container">
 
-    <input type="text" id="taskInput" placeholder="Enter a task">
-    <button onclick="addTask()">Add Task</button>
+<h1> To-Do List</h1>
 
-    <ul id="taskList"></ul>
-  </div>
+<div class="input-section">
 
-  <script>
-    function addTask() {
-      let input = document.getElementById("taskInput");
-      let taskText = input.value.trim();
+<input type="text" id="taskInput" placeholder="Enter Task">
 
-      if (taskText === "") {
-        alert("Please enter a task");
-        return;
-      }
+<input type="date" id="taskDate">
 
-      let li = document.createElement("li");
+<select id="taskHour">
+<option value="">Select Hour</option>
+<option>06:00 AM</option>
+<option>07:00 AM</option>
+<option>08:00 AM</option>
+<option>09:00 AM</option>
+<option>10:00 AM</option>
+<option>11:00 AM</option>
+<option>12:00 PM</option>
+<option>01:00 PM</option>
+<option>02:00 PM</option>
+<option>03:00 PM</option>
+<option>04:00 PM</option>
+<option>05:00 PM</option>
+<option>06:00 PM</option>
+<option>07:00 PM</option>
+<option>08:00 PM</option>
+<option>09:00 PM</option>
+<option>10:00 PM</option>
+</select>
 
-      let span = document.createElement("span");
-      span.textContent = taskText;
+<button onclick="addTask()">Add Task</button>
 
-      let actionDiv = document.createElement("div");
-      actionDiv.className = "actions";
+</div>
 
-      let editIcon = document.createElement("i");
-      editIcon.className = "fas fa-edit";
-      editIcon.onclick = function () {
-        let newTask = prompt("Edit your task:", span.textContent);
-        if (newTask !== null && newTask.trim() !== "") {
-          span.textContent = newTask;
-        }
-      };
+<ul id="taskList" class="task-list"></ul>
 
-      let deleteIcon = document.createElement("i");
-      deleteIcon.className = "fas fa-trash";
-      deleteIcon.onclick = function () {
-        li.remove();
-      };
+</div>
 
-      actionDiv.appendChild(editIcon);
-      actionDiv.appendChild(deleteIcon);
 
-      li.appendChild(span);
-      li.appendChild(actionDiv);
+<script>
 
-      document.getElementById("taskList").appendChild(li);
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-      input.value = "";
-    }
-  </script>
+function saveTasks(){
+localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function renderTasks(){
+
+let list = document.getElementById("taskList");
+list.innerHTML = "";
+
+tasks.forEach((task,index)=>{
+
+let li = document.createElement("li");
+li.className = "task";
+
+if(task.completed){
+li.classList.add("completed");
+}
+
+li.innerHTML = `
+<div>
+<span>${task.text}</span>
+<div class="date-time">${task.date} | ${task.hour}</div>
+</div>
+
+<div class="actions">
+
+<button class="complete-btn" onclick="toggleComplete(${index})">✔</button>
+
+<button onclick="deleteTask(${index})">✖</button>
+
+</div>
+`;
+
+list.appendChild(li);
+
+});
+
+}
+
+function addTask(){
+
+let text = document.getElementById("taskInput").value;
+let date = document.getElementById("taskDate").value;
+let hour = document.getElementById("taskHour").value;
+
+if(text === "" || date === "" || hour === ""){
+alert("Please fill all fields");
+return;
+}
+
+tasks.push({
+text,
+date,
+hour,
+completed:false
+});
+
+saveTasks();
+renderTasks();
+
+document.getElementById("taskInput").value="";
+}
+
+function toggleComplete(index){
+
+tasks[index].completed = !tasks[index].completed;
+
+saveTasks();
+renderTasks();
+
+}
+
+function deleteTask(index){
+
+tasks.splice(index,1);
+
+saveTasks();
+renderTasks();
+
+}
+
+renderTasks();
+
+</script>
 
 </body>
 </html>

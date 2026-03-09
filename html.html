@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DesignFrame</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#0f1c2e;
+color:white;
+display:flex;
+height:100vh;
+}
+
+.container{
+display:flex;
+width:100%;
+}
+
+
+
+.sidebar{
+width:280px;
+background:#14253d;
+padding:20px;
+}
+
+.sidebar h2{
+color:#39c4ff;
+margin-bottom:5px;
+}
+
+.sidebar p{
+font-size:13px;
+color:#ccc;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+}
+
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+background:#1fb6ff;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.shapeBtns{
+display:flex;
+gap:10px;
+}
+
+.shapeBtns button{
+background:#2c3e50;
+}
+
+
+
+.main{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.frame{
+width:520px;
+height:360px;
+background:#fff4c4;
+border-radius:15px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+
+
+.imageArea{
+position:relative;
+width:90%;
+height:90%;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+.imageArea img{
+max-width:100%;
+max-height:100%;
+border-radius:10px;
+}
+
+
+
+.shape{
+position:absolute;
+width:80px;
+height:80px;
+}
+
+.square{
+background:#3498db;
+top:20px;
+left:20px;
+}
+
+.circle{
+background:#e74c3c;
+border-radius:50%;
+bottom:20px;
+right:20px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+
+<div class="sidebar">
+
+<h2>DesignFrame</h2>
+<p>AI Image Generator</p>
+
+<input id="prompt" placeholder="Type beach, forest, car">
+
+<button onclick="generateImage()">Generate Image</button>
+
+<br><br>
+
+<label>Add Shapes</label>
+
+<div class="shapeBtns">
+<button onclick="addSquare()">Square</button>
+<button onclick="addCircle()">Circle</button>
+</div>
+
+<br>
+
+<label>Frame Background</label>
+<input type="color" id="bgcolor" onchange="changeBackground()">
+
+<br>
+
+<label>Frame Roundness</label>
+<input type="range" min="0" max="100" value="15" oninput="roundFrame(this.value)">
+
+<br><br>
+
+<button onclick="clearCanvas()">Clear Canvas</button>
+<button onclick="downloadFrame()">Download Frame</button>
+
+</div>
+
+
+
+
+<div class="main">
+
+<div class="frame" id="frame">
+
+<div class="imageArea" id="imageArea">
+
+<img id="generatedImage">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+
+function generateImage(){
+
+let text=document.getElementById("prompt").value.trim();
+
+if(text===""){
+text="random";
+}
+
+let img=document.getElementById("generatedImage");
+
+
+
+img.src="https://picsum.photos/800/500?random="+text+Date.now();
+
+}
+
+
+
+
+function addSquare(){
+
+let shape=document.createElement("div");
+shape.className="shape square";
+
+document.getElementById("imageArea").appendChild(shape);
+
+}
+
+
+
+
+function addCircle(){
+
+let shape=document.createElement("div");
+shape.className="shape circle";
+
+document.getElementById("imageArea").appendChild(shape);
+
+}
+
+
+
+
+function changeBackground(){
+
+let color=document.getElementById("bgcolor").value;
+
+document.getElementById("frame").style.background=color;
+
+}
+
+
+
+
+function roundFrame(value){
+
+document.getElementById("frame").style.borderRadius=value+"px";
+
+}
+
+
+
+
+function clearCanvas(){
+
+document.getElementById("generatedImage").src="";
+
+let shapes=document.querySelectorAll(".shape");
+shapes.forEach(s=>s.remove());
+
+}
+
+
+  
+function downloadFrame(){
+
+html2canvas(document.getElementById("frame")).then(canvas=>{
+let link=document.createElement("a");
+link.download="designframe.png";
+link.href=canvas.toDataURL();
+link.click();
+});
+
+}
+
+</script>
+
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+</body>
+</html>
